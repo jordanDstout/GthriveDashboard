@@ -1,0 +1,59 @@
+
+<script type='text/javascript'>
+$(function() {
+Dashing.gridsterLayout('[{"col":2,"row":1,"size_x":2,"size_y":1},{"col":2,"row":2,"size_x":2,"size_y":2}]')
+});
+</script>
+
+
+<% content_for :title do %>1080p dashboard<% end %>
+
+<div class="gridster">
+  <ul>
+    <li data-row="1" data-col="3" data-sizex="2" data-sizey="1">
+     <div data-id="welcome" data-view="Text" data-title="Version s1.7.1" data-text="This is your shiny new 1080p dashboard."></div>
+
+    </li>
+    <li data-row="1" data-col="1" data-sizex="2" data-sizey="2">
+      <div data-id="buzzwords" data-view="List" data-unordered="true" data-title="Farms" data-moreinfo="Active or inactive farms"></div>
+    </li>
+
+
+  </ul>
+  <center><div style="font-size: 12px">Try this: curl -d '{ "auth_token": "YOUR_AUTH_TOKEN", "text": "Hey, Look what I can do!" }' \http://<%=request.host%>:<%=request.port%>/widgets/welcome</div></center>
+</div>
+
+
+
+
+
+
+      <!--
+      <div id="id01"</div>
+      <script>
+        var url="https://gthrive-dashboard.herokuapp.com/users/1/web_requests/3/gthrive123.json";
+        var xhr = new XMLHttpRequest();
+        if ("withCredentials" in xhr) {
+        console.log("in1");
+        // Check if the XMLHttpRequest object has a "withCredentials" property.
+        // "withCredentials" only exists on XMLHTTPRequest2 objects.
+        xhr.open("GET", url, true);
+          }
+        
+        
+        xhr.onreadystatechange=function() {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+        myFunction(xhr.responseText);
+          }
+        }
+        xhr.open("GET", url, true);
+        xhr.send()
+        function myFunction(response) {
+          var arr = JSON.parse(response);
+          var i;
+          var out = "<table>";
+          out += "</table>";
+          document.getElementById("id01").innerHTML = out;
+          }
+      </script>
+-->

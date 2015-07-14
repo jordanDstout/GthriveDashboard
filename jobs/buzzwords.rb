@@ -3,7 +3,7 @@ buzzword_counts = Hash.new({ value: 0 })
 
 SCHEDULER.every '2s' do
   random_buzzword = buzzwords.sample
-  buzzword_counts[random_buzzword] = { label: random_buzzword, value: (assets/imgres.png)}
+  buzzword_counts[random_buzzword] = { label: random_buzzword, value: assets/imgres.png}
   
   send_event('buzzwords', { items: buzzword_counts.values })
 end

@@ -11,7 +11,7 @@ SCHEDULER.every '2s' do
   current_valuation = result
   current_karma     = rand(200000)
 
-  send_event('valuation', { current: current_valuation })
+  send_event('valuation', { current: current_valuation, last: })
   send_event('karma', { current: current_karma, last: last_karma })
   send_event('synergy',   { value: rand(100) })
 end

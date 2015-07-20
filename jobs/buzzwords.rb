@@ -7,20 +7,21 @@ list_of_glocations=['54','212','204']
     resp = Net::HTTP.get_response(URI.parse(token_source))
     data = resp.body
     result=JSON.parse(data)
-    print (result)
-    for name in result['placements'] do
-      gnode=result['placements'][name]
-      if gnode["gproduct_type"]=="Glink"
-        nodes[gnode]['display_name']=gnode["last_heartbeat"]
+    #print (result['configuration']['placements'])
+    for name in result['configuration']['placements'] do
+      print (name[1])
+      thing2=name[1]
+      if thing2["gproduct_type"]=="Glink"
+        nodes[thing2]['display_name']=gnode["last_heartbeat"]
       else 
-        nodes[gnode]['display_name']=gnode["last_reported_at"]
+        nodes[thing2]['display_name']=gnode["last_reported_at"]
       end
     end
   end
 
 SCHEDULER.every '5s' do
   for key in nodes
-    final = { label: key, value: nodes[key] }
+    final = { label: key[0], value: nodes[key][0] }
     send_event('buzzwords', { items: final.values })
   end
 end

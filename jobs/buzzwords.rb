@@ -6,7 +6,8 @@ list_of_glocations=['54','212','204']
     token_source = "https://secure.gthrive.com/api/client/v2/gnodes.json?glocation_id="+x+"&token=2uaHJ8UzbxxFhzr5w9s5&last_configured_at=2015-07-20T16%3A37%3A30.176Z"
     resp = Net::HTTP.get_response(URI.parse(token_source))
     data = resp.body
-    result=JSON.parse(data)  
+    result=JSON.parse(data)
+    print (result)
     for name in result['placements'] do
       gnode=result['placements'][name]
       if gnode["gproduct_type"]=="Glink"

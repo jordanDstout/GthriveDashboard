@@ -22,10 +22,11 @@ list_of_glocations=['54','212','204']
   
   
 SCHEDULER.every '2s' do
-  for key in nodes do
-    print (key[0])
-    print (key[1])
-    glove={ label: key[0], value: key[1] }
+  #for key in nodes do
+  #  print (key[0])
+  #  print (key[1])
+  first= nodes.first
+    glove={ label: first[0], value: first[1] }
     send_event('buzzwords', { items:glove.values })
   end
 end

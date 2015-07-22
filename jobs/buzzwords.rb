@@ -28,14 +28,15 @@ farm_counts["Farm Name"] = {label:"Farm Name", value: thing}
     send_event('buzzwords', { items: farm_counts.values })
 nodes.delete("name")
   
-#SCHEDULER.every '2s' do
+SCHEDULER.every '2s' do
   for key in nodes do
     key[1]=Time.parse(key[1])
     farm_counts[key[0]] = {label:key[0], value: key[1]}
   end
   farm_counts = farm_counts.sort_by {|_k,v| v[:value].is_a?(String) ? Time.at(0) : v[:value]}.to_h
+  
   send_event('buzzwords', { items: farm_counts.values })
-#end
+end
 
 
 #buzzword_counts[random_buzzword] = { label: random_buzzword, value: (buzzword_counts[random_buzzword][:value] + 1) % 30 }

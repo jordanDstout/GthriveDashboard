@@ -35,3 +35,5 @@ $ ->
 
   $('#save-gridster').click ->
     $('#save-gridster').slideUp()
+
+

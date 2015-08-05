@@ -10,11 +10,11 @@ $text-color: #fff;
 
 $background-warning-color-1: #e82711;
 $background-warning-color-2: #9b2d23;
-$text-warning-color: #fff;
+$text-warning-color: #ff0000;
 
 $background-danger-color-1: #eeae32;
 $background-danger-color-2: #ff9618;
-$text-danger-color: #fff;
+$text-danger-color: #00ff00;
 
 @-webkit-keyframes status-warning-background {
   0%   { background-color: $background-warning-color-1; }
@@ -72,6 +72,8 @@ iframe {
   max-width: 100%;
 }
 
+
+
 table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -90,6 +92,7 @@ ul, ol {
 h1, h2, h3, h4, h5, p {
   padding: 0;
   margin: 0;
+  color: #00ff00;
 }
 h1 {
   margin-bottom: 1px;
@@ -112,6 +115,7 @@ h3 {
 // ----------------------------------------------------------------------------
 // Base widget styles
 // ----------------------------------------------------------------------------
+
 .gridster {
   margin: 0px auto;
 }
@@ -147,32 +151,32 @@ h3 {
   text-align: center;
   width: 100%;
   display: table-cell;
-  //vertical-align: middle;
+  vertical-align: middle;
 }
 
 .widget.status-warning {
-  background-color: $background-warning-color-1;
-  @include animation(status-warning-background, 2s, ease, infinite);
+  /*background-color: $background-warning-color-1;*/
+  /*@include animation(status-warning-background, 2s, ease, infinite);*/
 
   .icon-warning-sign {
     display: inline-block;
   }
 
-  .title, .more-info {
+  .label, .value {
     color: $text-warning-color;
   }
 }
 
 .widget.status-danger {
   color: $text-danger-color;
-  background-color: $background-danger-color-1;
-  @include animation(status-danger-background, 2s, ease, infinite);
+  /*background-color: $background-danger-color-1;*/
+  /*@include animation(status-danger-background, 2s, ease, infinite);*/
 
   .icon-warning-sign {
     display: inline-block;
   }
 
-  .title, .more-info {
+  .label, .value {
     color: $text-danger-color;
   }
 }
@@ -192,6 +196,7 @@ h3 {
   left: 0;
   right: 0;
 }
+
 
 #save-gridster {
   display: none;
@@ -225,6 +230,8 @@ h3 {
   font-size: 15px;
   padding-bottom: 1px;
 
+  
+  
   textarea {
     white-space: nowrap;
     width: 494px;

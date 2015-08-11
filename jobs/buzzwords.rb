@@ -1,8 +1,7 @@
 require 'net/http'
 require 'time'
 require 'json'
-#require 'nokogiri'
-#require 'watir-webdriver'
+
 
 
 #Issues: This program is pretty slow. I mark places where i think it is especially bad.
@@ -25,17 +24,12 @@ token_source = "https://secure.gthrive.com/api/client/v2/gnodes.json?glocation_i
       list_of_glocations.insert(0,placementID['id'])
     end
     
-    
-    
 SCHEDULER.every '10s' do
   DateToday=Time.now
-  DateOneHour=Time.now-(60*60)
+  DateOneHour=Time.now.to_i-(60*60)
   #hash to collect all of the data from parsed JSON
     nodes = {}
     
-    
-  
-
 
   for x in list_of_glocations do
     x=x.to_s
@@ -83,7 +77,7 @@ SCHEDULER.every '10s' do
   #made a new hash for the arrays of farm names and nodes
   farms={}
   for key in nodes do
-    #if it is a farm name create a new array and make the key the farm name
+    #if it is a farm name create a new array in farms (hash) and make the key the farm name
     if farm_names.include?(key[1])
       currentFarm=[]
       farms[key]=currentFarm
@@ -95,6 +89,7 @@ SCHEDULER.every '10s' do
       end
     end
   end
+  
   #final hash used to compile all of the finalized data that has been sorted
   final1={}
   #this deletes any farms that have no placements (such as Sadie)
@@ -111,23 +106,15 @@ SCHEDULER.every '10s' do
     key0=key[0]
     key1= key[1]
     
-    
     #the format needed for the send_event method. other options are "status",
     #where you can have a warning or danger message customized (havent been
     # able to get it to work), and (more to come as i find them)
     final[key0[0]]={label: "----FARM NAME----", value:key0[1]}
    
    
-      ##Set the status for each item in the hash
+      ##Set the status for each item in th
       for x in key1 do
-      #  temp=Time.at(x[1]).to_datetime()
         toFinal=x[0]
-      #  if (DateToday.to_datetime()-temp)>(DateToday.to_datetime()-DateOneHour.to_datetime())
-      #    status='warning'
-      #  else
-      #    status='danger'
-      #  end
-      #  
         final[toFinal] = { label: toFinal, value: x[1]}
       end
       
@@ -139,10 +126,7 @@ SCHEDULER.every '10s' do
     final1=one.merge(final1)
 
   end
-
-  
-
-  #send the event with the ID farm
+  #send the event with the ID all
   send_event('all', { items: final1.values })
 end
 
@@ -151,12 +135,14 @@ end
 
 
 
+#I couldnt get this working but it is used to access the
+#DOM directly and change the attributes of individual items
 
 
+#require 'nokogiri'
+#require 'watir-webdriver'
 
-
-
-#url='localhost:3030/sample.tv'
+#url='localhost:3030/sampletv'
 #url='https://status.io.watchmouse.com/7617'
 #
 #  b = Watir::Browser.new :phantomjs

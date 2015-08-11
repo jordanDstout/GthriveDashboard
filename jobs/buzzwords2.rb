@@ -3,8 +3,7 @@
 require 'net/http'
 require 'time'
 require 'date'
-#require 'nokogiri'
-#require 'watir-webdriver'
+
 
 #This is the buzzwords file designed to only give the inactive nodes.
 #Issues are listed in the first buzzwords file and need to be applied to both
@@ -134,7 +133,7 @@ SCHEDULER.every '10s' do
 
   
 
-  #send the event with the ID farm
+  #send the event with the ID inactive
   send_event('inactive', { items: final1.values })
 #end
 
@@ -145,6 +144,9 @@ SCHEDULER.every '10s' do
 #I couldnt get this working but it is used to access the
 #DOM directly and change the attributes of individual items
 
+
+#require 'nokogiri'
+#require 'watir-webdriver'
 #url='localhost:3030/sample.tv'
 #url='https://status.io.watchmouse.com/7617'
 #

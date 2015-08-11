@@ -1,25 +1,44 @@
 require 'net/http'
 require 'time'
+require 'json'
 #require 'nokogiri'
 #require 'watir-webdriver'
 
 
+#Issues: This program is pretty slow. I mark places where i think it is especially bad.
+#i wanted to try to change the text color which is why i have the commented out
+#'status' part of the code.
+#I loop through 3 separate times but I think i may be able to do it all in one.
+# The reason i did it the way i did was for readability purposes. Each loop has a clearly defined
+# job and i mark each variable
+
+
 #array used to track which parts of the parsed data are names of farms and not Gnodes
 farm_names=[]
+list_of_glocations=[]
+token_source = "https://secure.gthrive.com/api/client/v2/gnodes.json?glocation_id=212&token=S_zwxQKD6xWqxMLGx9ks&last_configured_at=2015-06-26T23:25:49.962Z"
+    resp = Net::HTTP.get_response(URI.parse(token_source))
+    data = resp.body
+    result=JSON.parse(data)
+    config=result['configuration']
+    for placementID in config['glocations']
+      list_of_glocations.insert(0,placementID['id'])
+    end
+    
+    
+    
 SCHEDULER.every '10s' do
   DateToday=Time.now
   DateOneHour=Time.now-(60*60)
   #hash to collect all of the data from parsed JSON
     nodes = {}
     
-    #given tokens for an account. RIGHT NOW THIS IS HARDCODED.
-    #WHEN NEW FARMS ARE INSTALLED THIS WILL NOT ADD IN THEIR INFORMATION TO THE DASHBOARD.
-    #To program it in you would have to parse through the JSON and build list_of_glocations yourself.
     
   
-list_of_glocations=['249','248','282','225','208','228','252','273','220','200','222','281','271','258','255','227','309','280','272','247','209','39','283','204','250','279','27','194','212','90','187','25','219']
+
 
   for x in list_of_glocations do
+    x=x.to_s
     #Next 4 lines used to get and parse json
     token_source = "https://secure.gthrive.com/api/client/v2/gnodes.json?glocation_id="+x+"&token=S_zwxQKD6xWqxMLGx9ks&last_configured_at=2015-06-26T23:25:49.962Z"
     resp = Net::HTTP.get_response(URI.parse(token_source))
@@ -57,6 +76,10 @@ list_of_glocations=['249','248','282','225','208','228','252','273','220','200',
     end
   end
 
+
+  #I think i can combine this part and the previous part. This would save an extra
+  #loop through all of the placements
+  
   #made a new hash for the arrays of farm names and nodes
   farms={}
   for key in nodes do
@@ -74,6 +97,7 @@ list_of_glocations=['249','248','282','225','208','228','252','273','220','200',
   end
   #final hash used to compile all of the finalized data that has been sorted
   final1={}
+  #this deletes any farms that have no placements (such as Sadie)
   for deleter in farms do
     if deleter[1].length==0
       farms.delete(deleter[0])
@@ -81,11 +105,12 @@ list_of_glocations=['249','248','282','225','208','228','252','273','220','200',
   end
   for key in farms do
     
-    
     #make a fresh hash for each array from farms to be sorted by time
     final={}
-    key1= key[1]
+    
     key0=key[0]
+    key1= key[1]
+    
     
     #the format needed for the send_event method. other options are "status",
     #where you can have a warning or danger message customized (havent been
@@ -108,10 +133,9 @@ list_of_glocations=['249','248','282','225','208','228','252','273','220','200',
       
       #Brad wrote this to sort all of the items by time. The names of the farms
       #were given the oldest possible time so they'd be first in the list
-      
       one = final.sort_by{|_k,xq| xq[:value].is_a?(String) ? Time.at(0) : xq[:value]}.to_h
+      
       #merge the sorted hash to the final hash
-
     final1=one.merge(final1)
 
   end

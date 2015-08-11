@@ -6,21 +6,37 @@ require 'date'
 #require 'nokogiri'
 #require 'watir-webdriver'
 
+#This is the buzzwords file designed to only give the inactive nodes.
+#Issues are listed in the first buzzwords file and need to be applied to both
+# buzzwords and buzzwords2 (I used the name buzzwords because that was the original List-widget name)
+
 
 #array used to track which parts of the parsed data are names of farms and not Gnodes
 farm_names=[]
+list_of_glocations=[]
+token_source = "https://secure.gthrive.com/api/client/v2/gnodes.json?glocation_id=212&token=S_zwxQKD6xWqxMLGx9ks&last_configured_at=2015-06-26T23:25:49.962Z"
+    resp = Net::HTTP.get_response(URI.parse(token_source))
+    data = resp.body
+    result=JSON.parse(data)
+    config=result['configuration']
+    for placementID in config['glocations']
+      list_of_glocations.insert(0,placementID['id'])
+    end
+    
+    
+    
 SCHEDULER.every '10s' do
   DateToday=Time.now
   DateOneHour=Time.now-(60*60)
   #hash to collect all of the data from parsed JSON
     nodes = {}
     
-    #given tokens for an account. RIGHT NOW THIS IS HARDCODED.
-    #WHEN NEW FARMS ARE INSTALLED THIS WILL NOT ADD IN THEIR INFORMATION TO THE DASHBOARD.
-    #To program it in you would have to parse through the JSON and build list_of_glocations yourself.
-list_of_glocations=['249','248','282','225','208','228','252','273','220','200','222','281','271','258','255','227','309','280','272','247','209','39','283','204','250','279','27','194','212','90','187','25','219']
+    
+  
+
 
   for x in list_of_glocations do
+    x=x.to_s
     #Next 4 lines used to get and parse json
     token_source = "https://secure.gthrive.com/api/client/v2/gnodes.json?glocation_id="+x+"&token=S_zwxQKD6xWqxMLGx9ks&last_configured_at=2015-06-26T23:25:49.962Z"
     resp = Net::HTTP.get_response(URI.parse(token_source))

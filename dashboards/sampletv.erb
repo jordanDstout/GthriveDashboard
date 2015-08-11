@@ -1,7 +1,7 @@
 
 <script type='text/javascript'>
 $(function() {
-Dashing.gridsterLayout('[{"col":2,"row":1,"size_x":2,"size_y":2},{"col":2,"row":3,"size_x":2,"size_y":0}]')
+Dashing.gridsterLayout('[{"col":1,"row":1,"size_x":2,"size_y":3},{"col":3,"row":1,"size_x":2,"size_y":3}]')
 });
 </script>
 
@@ -10,12 +10,15 @@ Dashing.gridsterLayout('[{"col":2,"row":1,"size_x":2,"size_y":2},{"col":2,"row":
 <div class="gridster">
   <ul>
     </li>
-    <li data-row="1" data-col="2" data-sizex="2" data-sizey="2" class="extra">
-      <div data-id="farm" data-view="List" data-unordered="False" data-title="Farms" data-moreinfo="Active or inactive farms" ></div>
+    <li data-row="1" data-col="2" data-sizex="2" data-sizey="3">
+      <div data-id="all" data-view="List" data-unordered="False" data-title="All Active and Inactive Nodes"></div>
     </li>
-     <li data-row="3" data-col="2" data-sizex="2" data-sizey="1">
-      <div data-id="valuation" data-view="Number" data-title="Current Version" data-moreinfo="Gthrive Noc Dashboard" data-prefix=""></div>
+    
+    <li data-row="1" data-col="2" data-sizex="2" data-sizey="3">
+      <div data-id="inactive" data-view="List" data-unordered="False" data-title="Only Inactive Nodes"></div>
     </li>
+    
 
 
   </ul>
+</div>

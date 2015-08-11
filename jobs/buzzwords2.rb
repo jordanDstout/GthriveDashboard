@@ -1,5 +1,8 @@
+#!/usr/bin/env ruby
+
 require 'net/http'
 require 'time'
+require 'date'
 #require 'nokogiri'
 #require 'watir-webdriver'
 
@@ -15,8 +18,6 @@ SCHEDULER.every '10s' do
     #given tokens for an account. RIGHT NOW THIS IS HARDCODED.
     #WHEN NEW FARMS ARE INSTALLED THIS WILL NOT ADD IN THEIR INFORMATION TO THE DASHBOARD.
     #To program it in you would have to parse through the JSON and build list_of_glocations yourself.
-    
-  
 list_of_glocations=['249','248','282','225','208','228','252','273','220','200','222','281','271','258','255','227','309','280','272','247','209','39','283','204','250','279','27','194','212','90','187','25','219']
 
   for x in list_of_glocations do
@@ -94,16 +95,15 @@ list_of_glocations=['249','248','282','225','208','228','252','273','220','200',
    
    
       ##Set the status for each item in the hash
-      for x in key1 do
-      #  temp=Time.at(x[1]).to_datetime()
-        toFinal=x[0]
-      #  if (DateToday.to_datetime()-temp)>(DateToday.to_datetime()-DateOneHour.to_datetime())
-      #    status='warning'
-      #  else
-      #    status='danger'
-      #  end
-      #  
-        final[toFinal] = { label: toFinal, value: x[1]}
+      key2=key1.clone
+      for x in key1
+        if (DateToday.to_i-x[1].to_i)<(DateToday.to_i-DateOneHour.to_i)
+          key2.delete(x)
+        end
+      end
+      print key2
+      for newX in key2
+          final[newX[0]] = { label: newX[0], value: newX[1]}
       end
       
       #Brad wrote this to sort all of the items by time. The names of the farms
@@ -119,18 +119,15 @@ list_of_glocations=['249','248','282','225','208','228','252','273','220','200',
   
 
   #send the event with the ID farm
-  send_event('all', { items: final1.values })
-end
+  send_event('inactive', { items: final1.values })
+#end
 
 
 
 
 
-
-
-
-
-
+#I couldnt get this working but it is used to access the
+#DOM directly and change the attributes of individual items
 
 #url='localhost:3030/sample.tv'
 #url='https://status.io.watchmouse.com/7617'
@@ -150,4 +147,4 @@ end
   #    message: line[0]
   #  }
   #  send_event(line[0], data)
-  #end
+end

@@ -8,23 +8,27 @@
 $background-color: #222;
 $text-color: #fff;
 
-$background-warning-color-1: #e82711;
-$background-warning-color-2: #9b2d23;
-$text-warning-color: #ff0000;
-
 $background-danger-color-1: #eeae32;
 $background-danger-color-2: #ff9618;
 $text-danger-color: #00ff00;
 
+$background-warning-color-1: #e82711;
+$background-warning-color-2: #9b2d23;
+$text-warning-color: #ff0000;
+
+
+
+@-webkit-keyframes status-danger-background {
+  0%   { background-color: $background-danger-color-1; }
+  50%  { background-color: $background-danger-color-2; }
+  100% { background-color: $background-danger-color-1; }
+  
 @-webkit-keyframes status-warning-background {
   0%   { background-color: $background-warning-color-1; }
   50%  { background-color: $background-warning-color-2; }
   100% { background-color: $background-warning-color-1; }
 }
-@-webkit-keyframes status-danger-background {
-  0%   { background-color: $background-danger-color-1; }
-  50%  { background-color: $background-danger-color-2; }
-  100% { background-color: $background-danger-color-1; }
+
 }
 @mixin animation($animation-name, $duration, $function, $animation-iteration-count:""){
   -webkit-animation:  $animation-name $duration $function #{$animation-iteration-count};
@@ -153,6 +157,19 @@ h3 {
   display: table-cell;
   vertical-align: middle;
 }
+.widget.status-danger {
+  color: $text-danger-color;
+  /*background-color: $background-danger-color-1;*/
+  /*@include animation(status-danger-background, 2s, ease, infinite);*/
+
+  .icon-warning-sign {
+    display: inline-block;
+  }
+
+  .label, .value {
+    color: $text-danger-color;
+  }
+}
 
 .widget.status-warning {
   /*background-color: $background-warning-color-1;*/
@@ -167,19 +184,7 @@ h3 {
   }
 }
 
-.widget.status-danger {
-  color: $text-danger-color;
-  /*background-color: $background-danger-color-1;*/
-  /*@include animation(status-danger-background, 2s, ease, infinite);*/
 
-  .icon-warning-sign {
-    display: inline-block;
-  }
-
-  .label, .value {
-    color: $text-danger-color;
-  }
-}
 
 .more-info {
   font-size: 15px;

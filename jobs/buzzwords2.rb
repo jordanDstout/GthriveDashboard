@@ -13,7 +13,7 @@ require 'date'
 #array used to track which parts of the parsed data are names of farms and not Gnodes
 farm_names=[]
 list_of_glocations=[]
-token_source = "https://secure.gthrive.com/api/client/v2/gnodes.json?glocation_id=212&token=S_zwxQKD6xWqxMLGx9ks&last_configured_at=2015-06-26T23:25:49.962Z"
+token_source = "https://secure.gthrive.com/api/client/v2/gnodes.json?glocation_id=212&token=2uaHJ8UzbxxFhzr5w9s5&last_configured_at=2015-08-17T17:00:19.995Z"
     resp = Net::HTTP.get_response(URI.parse(token_source))
     data = resp.body
     result=JSON.parse(data)
@@ -24,7 +24,7 @@ token_source = "https://secure.gthrive.com/api/client/v2/gnodes.json?glocation_i
     
     
     
-SCHEDULER.every '10s' do
+SCHEDULER.every '300s' do
   DateToday=Time.now
   DateOneHour=Time.now-(60*60)
   #hash to collect all of the data from parsed JSON
@@ -37,7 +37,7 @@ SCHEDULER.every '10s' do
   for x in list_of_glocations do
     x=x.to_s
     #Next 4 lines used to get and parse json
-    token_source = "https://secure.gthrive.com/api/client/v2/gnodes.json?glocation_id="+x+"&token=S_zwxQKD6xWqxMLGx9ks&last_configured_at=2015-06-26T23:25:49.962Z"
+    token_source = "https://secure.gthrive.com/api/client/v2/gnodes.json?glocation_id="+x+"&token=2uaHJ8UzbxxFhzr5w9s5&last_configured_at=2015-08-17T17:00:19.995Z"
     resp = Net::HTTP.get_response(URI.parse(token_source))
     data = resp.body
     result=JSON.parse(data)
@@ -116,7 +116,6 @@ SCHEDULER.every '10s' do
           key2.delete(x)
         end
       end
-      print key2
       for newX in key2
           final[newX[0]] = { label: newX[0], value: newX[1]}
       end
